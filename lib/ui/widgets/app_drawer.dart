@@ -4,7 +4,6 @@ import '../../theme/app_theme.dart';
 import '../../utils/app_translations.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/locale_provider.dart';
-import '../../providers/user_profile_provider.dart';
 import '../screens/help_screen.dart';
 import '../screens/developer_profile_screen.dart';
 
@@ -13,198 +12,21 @@ class AppDrawer extends StatelessWidget {
 
   const AppDrawer({super.key, this.onNavigateToTab});
 
-  void _showSignInDialog(BuildContext context) {
-    final tr = AppTranslations.of(context);
-    final textController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (dialogCtx) => AlertDialog(
-        backgroundColor: AppTheme.cardColorOf(context),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: AppTheme.primaryCyan.withAlpha(40),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Icon(Icons.person_add_rounded, color: AppTheme.primaryCyan, size: 22),
-            ),
-            const SizedBox(width: 10),
-            Text(
-              tr.signIn,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: AppTheme.textPrimaryOf(context),
-              ),
-            ),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              tr.enterYourName,
-              style: TextStyle(
-                fontSize: 13,
-                color: AppTheme.textMutedOf(context),
-              ),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: textController,
-              autofocus: true,
-              style: TextStyle(color: AppTheme.textPrimaryOf(context)),
-              decoration: InputDecoration(
-                hintText: tr.nameHint,
-                hintStyle: TextStyle(color: AppTheme.textMutedOf(context)),
-                filled: true,
-                fillColor: AppTheme.surfaceOf(context),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: AppTheme.borderOf(context)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppTheme.primaryCyan, width: 1.5),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Icon(Icons.security_rounded, size: 13, color: AppTheme.accentEmerald),
-                const SizedBox(width: 6),
-                Expanded(
-                  child: Text(
-                    tr.profileCachedLocally,
-                    style: TextStyle(fontSize: 11, color: AppTheme.accentEmerald),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogCtx),
-            child: Text(
-              tr.cancel,
-              style: TextStyle(color: AppTheme.textMutedOf(context)),
-            ),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppTheme.primaryOf(context),
-              foregroundColor: Colors.black,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            ),
-            onPressed: () async {
-              final name = textController.text.trim();
-              if (name.isNotEmpty) {
-                await context.read<UserProfileProvider>().signIn(name);
-                if (dialogCtx.mounted) {
-                  Navigator.pop(dialogCtx);
-                }
-              }
-            },
-            child: Text(
-              tr.saveAndSignIn,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showSignOutConfirm(BuildContext context) {
-    final tr = AppTranslations.of(context);
-
-    showDialog(
-      context: context,
-      builder: (dialogCtx) => AlertDialog(
-        backgroundColor: AppTheme.cardColorOf(context),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: AppTheme.accentCoral.withAlpha(40),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(Icons.logout_rounded, color: AppTheme.accentCoral, size: 22),
-            ),
-            const SizedBox(width: 10),
-            Text(
-              tr.signOut,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: AppTheme.textPrimaryOf(context),
-              ),
-            ),
-          ],
-        ),
-        content: Text(
-          tr.confirmSignOut,
-          style: TextStyle(
-            fontSize: 13,
-            color: AppTheme.textMutedOf(context),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogCtx),
-            child: Text(
-              tr.cancel,
-              style: TextStyle(color: AppTheme.textMutedOf(context)),
-            ),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppTheme.accentCoral,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            ),
-            onPressed: () async {
-              await context.read<UserProfileProvider>().signOut();
-              if (dialogCtx.mounted) {
-                Navigator.pop(dialogCtx);
-              }
-            },
-            child: Text(
-              tr.signOut,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final tr = AppTranslations.of(context);
     final themeProvider = context.watch<ThemeProvider>();
     final localeProvider = context.watch<LocaleProvider>();
-    final profileProvider = context.watch<UserProfileProvider>();
 
     return Drawer(
       backgroundColor: AppTheme.scaffoldOf(context),
       child: SafeArea(
         child: Column(
           children: [
-            // User Profile Header Card
+            // App Branding Header Card
             Container(
-              margin: const EdgeInsets.fromLTRB(14, 10, 14, 8),
-              padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [AppTheme.primaryCyan, AppTheme.secondaryPurple],
@@ -214,118 +36,59 @@ class AppDrawer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: AppTheme.primaryCyan.withAlpha(40),
+                    color: AppTheme.primaryCyan.withAlpha(45),
                     blurRadius: 14,
                     offset: const Offset(0, 4),
                   ),
                 ],
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  Row(
-                    children: [
-                      // Avatar
-                      Container(
-                        width: 52,
-                        height: 52,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.black.withAlpha(60),
-                          border: Border.all(color: Colors.white, width: 2),
-                        ),
-                        child: Center(
-                          child: profileProvider.isLoggedIn
-                              ? Text(
-                                  profileProvider.displayName.isNotEmpty
-                                      ? profileProvider.displayName[0].toUpperCase()
-                                      : 'U',
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w900,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : const Icon(Icons.person_outline_rounded,
-                                  color: Colors.white, size: 28),
-                        ),
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.black.withAlpha(60),
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.cell_tower_rounded,
+                        color: Colors.white,
+                        size: 26,
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              profileProvider.isLoggedIn
-                                  ? tr.signedInAs
-                                  : tr.guestUser,
-                              style: const TextStyle(
-                                fontSize: 11,
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              profileProvider.displayName,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.black87,
-                              ),
-                            ),
-                            if (profileProvider.isLoggedIn &&
-                                profileProvider.signInDate.isNotEmpty)
-                              Text(
-                                '${tr.memberSince} ${profileProvider.signInDate}',
-                                style: const TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.black45,
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                  const SizedBox(height: 12),
-                  // Sign In / Sign Out Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: profileProvider.isLoggedIn
-                        ? OutlinedButton.icon(
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: Colors.black,
-                              side: const BorderSide(color: Colors.black54, width: 1.2),
-                              padding: const EdgeInsets.symmetric(vertical: 6),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            icon: const Icon(Icons.logout_rounded, size: 16),
-                            label: Text(
-                              tr.signOut,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                            ),
-                            onPressed: () => _showSignOutConfirm(context),
-                          )
-                        : ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            icon: const Icon(Icons.login_rounded, size: 16),
-                            label: Text(
-                              tr.signIn,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                            ),
-                            onPressed: () => _showSignInDialog(context),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          tr.appName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.black87,
+                            letterSpacing: 0.3,
                           ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          tr.appSubtitle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
