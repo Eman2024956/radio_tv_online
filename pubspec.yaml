@@ -1,5 +1,5 @@
 name: radio_channel
-description: "Radio & TV Online - Global Live Radio Stations, TV Channels Streaming & Audio Recording."
+description: "Sawt Al-Alam - صوت العالم - Global Live Radio Stations, TV Channels Streaming & Audio Recording."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none'

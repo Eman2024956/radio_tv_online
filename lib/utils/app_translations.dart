@@ -13,7 +13,7 @@ class AppTranslations {
   }
 
   // General & Navigation
-  String get appName => isArabic ? 'راديو وتلفزيون أونلاين' : 'Radio & TV Online';
+  String get appName => isArabic ? 'صوت العالم' : 'Sawt Al-Alam';
   String get appSubtitle => isArabic ? 'بث حي ومباشر للمحطات الإذاعية والقنوات التلفزيونية' : 'Live Global Radio Stations & TV Channels';
   String get navHome => isArabic ? 'الرئيسية' : 'Home';
   String get navCountries => isArabic ? 'الدول' : 'Countries';
@@ -153,7 +153,7 @@ class AppTranslations {
 
   // Copyright
   String get developerCopyright =>
-      isArabic ? 'جميع الحقوق محفوظة © 2026 راديو وتلفزيون أونلاين' : 'Copyright © 2026 Radio & TV Online. All rights reserved.';
+      isArabic ? 'جميع الحقوق محفوظة © 2026 صوت العالم' : 'Copyright © 2026 Sawt Al-Alam. All rights reserved.';
 
   // Side Menu & Drawer
   String get menuTitle => isArabic ? 'القائمة الرئيسية' : 'Main Menu';
@@ -182,8 +182,8 @@ class AppTranslations {
   String get memberSince => isArabic ? 'تاريخ التسجيل:' : 'Member since:';
 
   // About Platform & Broadcast Profile
-  String get developerTitle => isArabic ? 'راديو وتلفزيون أونلاين' : 'Radio & TV Online';
-  String get developerCompany => isArabic ? 'شبكة البث الرقمي المباشر 2026' : 'Digital Broadcast Network 2026';
+  String get developerTitle => isArabic ? 'صوت العالم' : 'Sawt Al-Alam';
+  String get developerCompany => isArabic ? 'شبكة صوت العالم 2026' : 'Sawt Al-Alam Network 2026';
   String get leadEngineer => isArabic ? 'منصة البث الصوتي والمرئي العالمي' : 'Global Audio & Video Streaming Platform';
   String get devBio => isArabic
       ? 'منصة ترفيهية متكاملة تقدم بثاً حياً ومباشراً لأكثر من 58,000 محطة إذاعية وقنوات تلفزيونية عالمية مع تسجيل عالي الجودة وتجربة استماع ومشاهدة سلسة.'
@@ -197,7 +197,7 @@ class AppTranslations {
   String get shareApp => isArabic ? 'مشاركة التطبيق' : 'Share Application';
 
   // Help Documentation
-  String get helpDocsTitle => isArabic ? 'دليل استخدام راديو وتلفزيون أونلاين' : 'Radio & TV Online User Guide';
+  String get helpDocsTitle => isArabic ? 'دليل استخدام صوت العالم' : 'Sawt Al-Alam User Guide';
   String get helpDocsSubtitle => isArabic ? 'كل ما تحتاج لمعرفته للاستمتاع بآلاف الإذاعات والقنوات المباشرة' : 'Everything you need to enjoy thousands of live stations & channels';
   String get guideStationsSearch => isArabic ? 'البحث والتصفية الدقيقة' : 'Searching & Smart Filters';
   String get guideStationsSearchBody => isArabic

@@ -276,8 +276,8 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen>
                       const SizedBox(height: 4),
                       Text(
                         tr.isArabic
-                            ? 'بث مباشر عالي الجودة - راديو وتلفزيون أونلاين'
-                            : 'High-Quality Live Streaming - Radio & TV Online',
+                            ? 'بث مباشر عالي الجودة - صوت العالم'
+                            : 'High-Quality Live Streaming - Sawt Al-Alam',
                         style: TextStyle(
                           fontSize: 10,
                           color: AppTheme.textMutedOf(context),

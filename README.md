@@ -1,12 +1,12 @@
-# 📻📺 Radio & TV Online - راديو وتلفزيون أونلاين
+# 📻📺 صوت العالم (Sawt Al-Alam) - Live Radio & TV Online
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart)](https://dart.dev)
 [![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-green.svg)]()
-[![Copyright](https://img.shields.io/badge/Copyright-%C2%A9%202026%20Radio%20%26%20TV%20Online-purple.svg)]()
+[![Copyright](https://img.shields.io/badge/Copyright-%C2%A9%202026%20Sawt%20Al--Alam-purple.svg)]()
 [![Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()
 
-> **Radio & TV Online (راديو وتلفزيون أونلاين)** is an all-in-one live streaming platform built with Flutter. It connects users to over **58,000+ live radio stations** and **global TV channels** worldwide with crystal-clear audio, smooth HLS video streaming, timed live MP3 recording to physical storage, interactive program guides (EPG), and a dual English / Arabic RTL interface.
+> **صوت العالم (Sawt Al-Alam)** is an all-in-one live streaming platform built with Flutter. It connects users to over **58,000+ live radio stations** and **global TV channels** worldwide with crystal-clear audio, smooth HLS video streaming, timed live MP3 recording to physical storage, interactive program guides (EPG), and a dual English / Arabic RTL interface.
 
 ---
 
@@ -155,7 +155,7 @@ git push origin main
 ## ⚖️ Copyright & License
 
 ```
-Copyright © 2026 Radio & TV Online. All Rights Reserved.
+Copyright © 2026 Sawt Al-Alam (صوت العالم). All Rights Reserved.
 ```
 
 - **Attribution**: Live radio directory metadata is provided by the open community at [Radio-Browser.info](https://www.radio-browser.info/). Live TV streaming metadata is powered by global IPTV open databases.

@@ -4,6 +4,6 @@ import 'package:radio_channel/main.dart';
 void main() {
   testWidgets('RadioChannelApp boots up smoke test', (WidgetTester tester) async {
     await tester.pumpWidget(const RadioChannelApp());
-    expect(find.text('Radio & TV Online'), findsOneWidget);
+    expect(find.text('Sawt Al-Alam'), findsOneWidget);
   });
 }
