@@ -41,7 +41,7 @@ class DeveloperProfileScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  // Developer Avatar Badge with Iraqi Flag Badge
+                  // Platform Logo Badge
                   Stack(
                     alignment: Alignment.bottomRight,
                     children: [
@@ -55,8 +55,8 @@ class DeveloperProfileScreen extends StatelessWidget {
                         ),
                         child: const Center(
                           child: Icon(
-                            Icons.person_outline_rounded,
-                            size: 52,
+                            Icons.cell_tower_rounded,
+                            size: 50,
                             color: Colors.white,
                           ),
                         ),
@@ -68,7 +68,7 @@ class DeveloperProfileScreen extends StatelessWidget {
                           shape: BoxShape.circle,
                           border: Border.all(color: Colors.white, width: 1.5),
                         ),
-                        child: const Text('🇮🇶', style: TextStyle(fontSize: 16)),
+                        child: const Text('📡', style: TextStyle(fontSize: 16)),
                       ),
                     ],
                   ),
@@ -213,7 +213,7 @@ class DeveloperProfileScreen extends StatelessWidget {
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('${tr.developerCompany} - contact@falahgatea.dev'),
+                          content: Text('${tr.developerCompany} - support@radiotvonline.live'),
                           backgroundColor: AppTheme.surfaceOf(context),
                         ),
                       );

@@ -4,6 +4,7 @@ import '../../utils/app_translations.dart';
 import '../widgets/mini_player_bar.dart';
 import '../widgets/app_drawer.dart';
 import 'home_screen.dart';
+import 'live_tv_screen.dart';
 import 'countries_screen.dart';
 import 'search_screen.dart';
 import 'favorites_screen.dart';
@@ -39,6 +40,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         onNavigateToTab: _onSelectTab,
         onOpenDrawer: _openDrawer,
       ),
+      LiveTvScreen(onNavigateToTab: _onSelectTab),
       CountriesScreen(onNavigateToTab: _onSelectTab),
       const SearchScreen(),
       FavoritesScreen(onNavigateToTab: _onSelectTab),
@@ -80,6 +82,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               icon: const Icon(Icons.home_outlined),
               selectedIcon: const Icon(Icons.home_rounded),
               label: tr.navHome,
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.live_tv_outlined),
+              selectedIcon: const Icon(Icons.live_tv_rounded),
+              label: tr.navLiveTv,
             ),
             NavigationDestination(
               icon: const Icon(Icons.public_outlined),

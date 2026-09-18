@@ -1,129 +1,161 @@
-# 📻 Falah Radio - راديو فلاح
+# 📻📺 Radio & TV Online - راديو وتلفزيون أونلاين
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart)](https://dart.dev)
-[![License](https://img.shields.io/badge/License-Proprietary-blue.svg)]()
 [![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-green.svg)]()
-[![Developer](https://img.shields.io/badge/Developer-Falah.G.Salieh%202025%20Co-purple.svg)]()
+[![Copyright](https://img.shields.io/badge/Copyright-%C2%A9%202026%20Radio%20%26%20TV%20Online-purple.svg)]()
+[![Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()
 
-> **Falah Radio (راديو فلاح)** is a world-class global radio streaming and audio recording application built with Flutter. Connecting listeners to over **58,000+ live broadcast stations** across **240+ nations and territories**, with instant search, multi-codec playback (MP3, AAC+, OGG, FLAC), timed live MP3 recording directly to device storage, offline playback, and bilingual English/Arabic RTL experience.
+> **Radio & TV Online (راديو وتلفزيون أونلاين)** is an all-in-one live streaming platform built with Flutter. It connects users to over **58,000+ live radio stations** and **global TV channels** worldwide with crystal-clear audio, smooth HLS video streaming, timed live MP3 recording to physical storage, interactive program guides (EPG), and a dual English / Arabic RTL interface.
 
 ---
 
-## 🌟 Key Features
+## 🌟 Key Highlights & Features
 
-### 1. 📻 58,000+ Worldwide Stations Explorer
-- Comprehensive directory powered by the community-driven **Radio-Browser API** with automatic mirror failover (`de1.api.radio-browser.info`).
-- **Country Catalogs**: Grouped by regions (Arab World & Middle East 🕌, Europe 🏰, Americas 🌎, Asia 🏯, and All Nations 🌍) with national flag emojis.
-- **Top Channels & Genres**: Most listened worldwide, community top-rated, and genre filters (News, Quran, Jazz, Classical, Rock, Pop, Chillout).
-- **Advanced Filtering**: Filter by broadcast codec (MP3, AAC+, OGG), minimum bitrate (64k, 128k, 192k, 320k), language, and country code.
+### 1. 📻 Worldwide Radio Explorer (58,000+ Stations)
+- **Extensive Global Directory**: Powered by community open radio directories with automatic mirror failover and Cloudflare DNS-over-HTTPS resilience.
+- **Geographic Exploration**: 240+ countries and territories categorized into quick-filter regions (Arab World & Middle East 🕌, Europe 🏰, Americas 🌎, Asia 🏯, and All Nations 🌍).
+- **Genre & Discovery**: Top-rated stations, most-streamed worldwide, and instant genre filtering (News, Talk, Quran, Pop, Classical, Rock, Jazz, Chillout, Sports).
+- **Format & Bitrate Filtering**: Filter streams by audio format (MP3, AAC+, OGG, FLAC) and streaming bitrates (64k to 320k+).
 
-### 2. 🎙️ Live Stream MP3 Recording to Device Downloads
-- Direct HTTP stream capture saving genuine MP3 audio files to your real device storage:
+### 2. 📺 World Live TV & Video Streaming
+- **Live Video Streaming**: Real-time HLS video playback for news, sports, culture, documentaries, and entertainment channels.
+- **Categorized Channel Lineup**: Browse channels by genre (News, Sports, Music, General, Entertainment, Kids, Movies).
+- **Integrated Program Guide (EPG)**: View live schedule timetables, currently airing shows, upcoming broadcasts, and real-time progress bars.
+- **Adaptive Video Player**: Controls for quality selection, aspect ratios, full-screen playback, and buffering management.
+
+### 3. 🎙️ Live Stream MP3 Recording
+- **Direct Stream Capture**: Records genuine MP3 audio streams directly into your device's physical storage:
   - Android download directory: `/storage/emulated/0/Download/RadioRecordings/`
-- Preset timers: **30 seconds (Quick Clip)**, **1 minute (Standard)**, **3 minutes (Song Track)**, **5 minutes (Segment)**, or manual continuous recording.
-- Real-time recording indicator with elapsed duration badge.
-- Fully compatible with Android 10, 11, 12, 13, and 14 scoped storage and runtime permissions.
+- **Flexible Timers**:
+  - `30 Seconds` (Quick Clip)
+  - `1 Minute` (Standard)
+  - `3 Minutes` (Music Track)
+  - `5 Minutes` (Segment / News)
+  - `Custom / Continuous` manual recording
+- **Offline Playback**: In-app player inside the **Downloads** tab to listen to saved audio files anytime without internet connection.
 
-### 3. ❤️ Favorites & Offline Listening History
-- One-tap heart bookmarking to pin favorite stations for instant tuning.
-- Automatic playback history tracking recently listened channels.
-- Offline playback engine in the **Downloads** tab to play captured MP3 tracks anytime without internet connection.
+### 4. ❤️ Bookmarks & Listening History
+- **One-Tap Favorites**: Pin favorite radio stations and TV channels with a single tap.
+- **Recent Playback History**: Automatically records your listening sessions for fast access.
+- **Search within Bookmarks**: Instant real-time filtering within saved stations.
 
-### 4. 👤 User Profile & Local State Caching
-- User profile system with Sign-In and Sign-Out modal workflows.
-- Cached locally via `SharedPreferences`: stores user display name, registration timestamp, and authentication state.
-- Interactive side drawer avatar with quick user identity management.
+### 5. 🌐 Instant Bilingual Support (English & Arabic RTL)
+- Full **Right-to-Left (RTL)** layout mirroring when Arabic is active.
+- Seamless, zero-restart language switcher available from the top navigation bar and side drawer.
 
-### 5. 🌓 Cyber Dark & Clean Light Themes
-- **Cyber Dark Mode**: Deep slate `#090D16` with neon cyan `#00E5FF` and electric purple `#8B5CF6` accents.
-- **Clean Light Mode**: High-contrast, crisp typography designed for maximum daylight readability.
-- Instant toggle from the home header and side drawer with zero latency.
-
-### 6. 🌐 Instant English / Arabic (العربية) Translation
-- Native **RTL (Right-to-Left)** layout adaptation for Arabic users.
-- Live language toggle switch across all dialogs, bottom sheets, navigation menus, and screens without restarting the app.
-
-### 7. 📄 Help Documentation & Developer Showcase
-- **Help Documentation (`HelpScreen`)**: In-app guide explaining stream search, recording mechanics, favorites, and technical audio specs.
-- **Developer Profile (`DeveloperProfileScreen`)**: Official developer showcase honoring **Iraqi Developer Falah.G.Salieh 2025 Co.** with contact options and tech stack details.
+### 6. 🌓 Modern Cyber Dark & Clean Light Themes
+- **Cyber Dark Theme**: Deep slate `#090D16` palette with neon cyan `#00E5FF` and electric purple `#8B5CF6` accents.
+- **Clean Light Theme**: High-contrast, crisp typography engineered for optimal daytime visibility.
+- Smooth transition between themes without interrupting ongoing audio or video playback.
 
 ---
 
-## 📱 Application Screens & Navigation
+## 📱 Navigation & App Structure
 
-The app is architected with a persistent 5-tab `NavigationBar` plus a floating `MiniPlayerBar`:
+The app is designed with a persistent navigation bar and responsive floating player:
 
-1. **Home (`HomeScreen`)**: Hero live banners, top worldwide stations, regional quick-access pills, and side drawer hamburger menu.
-2. **Countries (`CountriesScreen`)**: 240+ countries organized into geographic tabs with real-time station counts.
-3. **Search & Filters (`SearchScreen`)**: Real-time keyword search with custom bottom sheet for codec and bitrate filtering.
-4. **Favorites (`FavoritesScreen`)**: Bookmarked stations and recent listening history.
-5. **Downloads (`DownloadsScreen`)**: Saved MP3 recordings stored locally on the device with in-app audio playback.
-6. **Player Screen (`PlayerScreen`)**: Full-screen player with live bitrate/codec stats, stream URL copier, and MP3 recording dialog.
-7. **Side Drawer (`AppDrawer`)**: User profile card, main navigation shortcuts, Help Documentation, Developer Profile, and quick toggles.
-
----
-
-## 🛠️ Architecture & Tech Stack
-
-| Layer | Technology |
-| :--- | :--- |
-| **Framework** | Flutter 3.x (Material 3 with custom Design System) |
-| **Language** | Dart 3.x (Null safety enabled) |
-| **State Management** | `Provider` & `ChangeNotifierProxyProvider` |
-| **Audio Engine** | `audioplayers` 6.7.1 (Live HTTP stream buffering) |
-| **Networking** | `http` 1.6.0 with mirror failover and timeout resilience |
-| **Local Storage** | `shared_preferences` (Favorites, recents, theme, locale, user profile) |
-| **File I/O & Permissions** | `path_provider` & `permission_handler` |
-| **Typography** | Google Fonts (`Outfit`) & Arabic typography |
+1. **Home Screen**: Featured live highlights, trending worldwide channels, regional quick-access pills, and side navigation.
+2. **Live TV Screen**: Live video streams, category chips, channel cards, and EPG programming schedules.
+3. **Countries Screen**: 240+ countries and territories organized into geographic tabs with real-time station counts.
+4. **Search Screen**: Real-time keyword search, codec filter chips, and bitrate selectors.
+5. **Favorites & History Screen**: Pinned channels and automated listening history.
+6. **Downloads Screen**: Local audio recordings manager with integrated playback.
+7. **Radio Player Screen**: Detailed player with live stream metadata, codec stats, and MP3 recording controls.
+8. **TV Player Screen**: Interactive video player with live EPG schedule drawer and stream status indicators.
+9. **Side Drawer**: User profile status, theme toggles, language switcher, and platform information.
 
 ---
 
-## 📦 Building & Deployment
+## 🛠️ Architecture & Technology Stack
 
-### 1. Build Production Android App Bundle (.aab)
-Signed using JDK's `keytool` and configured in `android/app/build.gradle.kts`:
-```bash
-flutter build appbundle --release
-```
-- Output: `build/app/outputs/bundle/release/app-release.aab` (Google Play ready)
+| Component | Technology | Description |
+| :--- | :--- | :--- |
+| **Framework** | Flutter 3.x | Cross-platform UI toolkit with Material 3 |
+| **Language** | Dart 3.x | Modern, null-safe reactive language |
+| **State Management** | `provider` | Decoupled state and reactive service scopes |
+| **Audio Playback** | `audioplayers` | Live audio stream buffering and decoding |
+| **Video Playback** | `video_player` & `chewie` | HLS video stream decoding and playback controls |
+| **Network & DNS** | `http` | HTTP streaming, mirror failover, Cloudflare DoH |
+| **Local Persistence** | `shared_preferences` | Caches favorites, history, settings, and profile |
+| **File I/O** | `path_provider` & `permission_handler` | Scoped storage access for MP3 recordings |
+| **Typography** | Google Fonts (`Outfit`) | Crisp typography with Arabic font pairing |
 
-### 2. Build Production Release APK
-```bash
-flutter build apk --release
-```
-- Output: `build/app/outputs/flutter-apk/app-release.apk` (55.6 MB, signed with release keystore)
+---
 
-### 3. Run Automated Tests & Static Analysis
+## 🚀 Getting Started
+
+### Prerequisites
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) (`^3.10.7` or newer)
+- [Android Studio](https://developer.android.com/studio) / Xcode for iOS deployment
+- Java JDK 17+
+
+### Installation & Run
+
+1. **Clone the repository**:
+   ```bash
+   git clone git@github.com:Eman2024956/radio_tv_online.git
+   cd radio_channel
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   flutter pub get
+   ```
+
+3. **Run on connected device / emulator**:
+   ```bash
+   flutter run
+   ```
+
+---
+
+## 🧪 Testing & Verification
+
+Run automated unit and widget test suites:
 ```bash
-dart analyze lib/
 flutter test
 ```
 
----
-
-## 🚀 Repository & Remote
-
-- **GitHub Remote**: `git@github.com:Eman2024956/radio_channel.git`
-- **Branch**: `main`
-
-To pull the latest changes:
+Run static code analysis:
 ```bash
-git clone git@github.com:Eman2024956/radio_channel.git
-cd radio_channel
-flutter pub get
-flutter run
+dart analyze lib/ test/
 ```
 
 ---
 
-## ⚖️ Copyright & Credits
+## 📦 Building for Production
+
+### Android Release APK
+```bash
+flutter build apk --release
+```
+*Output:* `build/app/outputs/flutter-apk/app-release.apk`
+
+### Android App Bundle (.aab) for Google Play
+```bash
+flutter build appbundle --release
+```
+*Output:* `build/app/outputs/bundle/release/app-release.aab`
+
+---
+
+## 🌐 Remote Repository
+
+- **GitHub Remote**: `git@github.com:Eman2024956/radio_tv_online.git`
+- **Default Branch**: `main`
+
+To push updates:
+```bash
+git push origin main
+```
+
+---
+
+## ⚖️ Copyright & License
 
 ```
-COPYRIGHT BY Iraqi Developer Falah.G.Salieh 2025 co.
-All Rights Reserved.
+Copyright © 2026 Radio & TV Online. All Rights Reserved.
 ```
 
-- **Developer**: Falah Gatea Salieh (العراق - بغداد 🇮🇶)
-- **Company**: Falah.G.Salieh 2025 Co.
-- **API Attribution**: Powered by [Radio-Browser.info](https://www.radio-browser.info/) community open database.
+- **Attribution**: Live radio directory metadata is provided by the open community at [Radio-Browser.info](https://www.radio-browser.info/). Live TV streaming metadata is powered by global IPTV open databases.

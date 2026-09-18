@@ -6,71 +6,148 @@ import '../models/country.dart';
 import '../models/language.dart';
 import '../models/genre_tag.dart';
 
+enum ApiRoute { standardHttps, directIpHttp }
+
 class RadioApiService {
   static final RadioApiService _instance = RadioApiService._internal();
   factory RadioApiService() => _instance;
   RadioApiService._internal();
 
-  static const List<String> fallbackServers = [
-    'de1.api.radio-browser.info',
-    'all.api.radio-browser.info',
-  ];
+  static const String defaultHostname = 'de1.api.radio-browser.info';
+  static const String fallbackIp = '91.98.4.78';
 
-  String _currentServer = fallbackServers.first;
-  bool _serverResolved = false;
+  final String _currentServer = defaultHostname;
+  String _resolvedIp = fallbackIp;
+  ApiRoute _preferredRoute = ApiRoute.standardHttps;
+  bool _initialized = false;
 
-  static const Map<String, String> _headers = {
-    'User-Agent': 'FalahRadioApp/1.0 (Flutter; Mobile/Desktop/Web; Developer: Falah.G.Salieh)',
+  static const Map<String, String> _baseHeaders = {
+    'User-Agent': 'RadioTvOnline/1.0 (Flutter; Mobile/Desktop/Web)',
     'Accept': 'application/json',
   };
 
-  /// Dynamically discover and set the best available mirror server
-  Future<void> initServer() async {
-    if (_serverResolved) return;
+  /// Proactively resolve DNS via Cloudflare/Google DoH if ISP DNS fails
+  Future<void> _resolveDnsOverHttps() async {
     try {
-      final uri = Uri.parse('https://all.api.radio-browser.info/json/servers');
-      final response = await http.get(uri, headers: _headers).timeout(
-        const Duration(seconds: 6),
+      final dohUri = Uri.parse(
+        'https://1.1.1.1/dns-query?name=$defaultHostname&type=A',
       );
+      final response = await http.get(dohUri, headers: {
+        'accept': 'application/dns-json',
+      }).timeout(const Duration(seconds: 3));
+
       if (response.statusCode == 200) {
-        final list = jsonDecode(response.body) as List;
-        if (list.isNotEmpty && list[0]['name'] != null) {
-          _currentServer = list[0]['name'].toString();
-          _serverResolved = true;
-          return;
+        final json = jsonDecode(response.body);
+        final answers = json['Answer'] as List?;
+        if (answers != null && answers.isNotEmpty) {
+          final ip = answers.first['data']?.toString();
+          if (ip != null && ip.contains('.')) {
+            _resolvedIp = ip;
+            debugPrint('[RadioApi] Cloudflare DoH resolved $defaultHostname -> $ip');
+            return;
+          }
         }
       }
     } catch (e) {
-      debugPrint('Server discovery fallback to default: $e');
+      debugPrint('[RadioApi] Cloudflare DoH lookup fallback: $e');
     }
-    _currentServer = fallbackServers.first;
-    _serverResolved = true;
+
+    // Google DoH fallback
+    try {
+      final googleDoh = Uri.parse(
+        'https://dns.google/resolve?name=$defaultHostname&type=A',
+      );
+      final response = await http.get(googleDoh).timeout(const Duration(seconds: 3));
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body);
+        final answers = json['Answer'] as List?;
+        if (answers != null && answers.isNotEmpty) {
+          final ip = answers.first['data']?.toString();
+          if (ip != null && ip.contains('.')) {
+            _resolvedIp = ip;
+            debugPrint('[RadioApi] Google DoH resolved $defaultHostname -> $ip');
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint('[RadioApi] Google DoH lookup fallback: $e');
+    }
   }
 
-  /// Internal request runner with mirror failover
+  /// Initialize server and fast-check connectivity
+  Future<void> initServer() async {
+    if (_initialized) return;
+    _initialized = true;
+
+    // Start background DoH resolution to ensure we have valid IP
+    _resolveDnsOverHttps();
+  }
+
+  /// Resilient request runner: attempts Standard HTTPS, then immediately falls back
+  /// to Direct IP HTTP (bypassing ISP DNS poisoning/throttling) and DoH resolution.
   Future<http.Response> _getWithFallback(String path, [Map<String, String>? queryParams]) async {
     await initServer();
 
-    final serversToTry = [_currentServer, ...fallbackServers.where((s) => s != _currentServer)];
-    dynamic lastError;
-
-    for (final server in serversToTry) {
+    // If direct IP was previously proven faster/working (e.g. ISP blocks DNS), try it first!
+    if (_preferredRoute == ApiRoute.directIpHttp) {
       try {
-        final uri = Uri.https(server, path, queryParams);
-        final response = await http.get(uri, headers: _headers).timeout(
-          const Duration(seconds: 15),
-        );
-        if (response.statusCode == 200) {
-          _currentServer = server;
-          return response;
-        }
+        final directResponse = await _fetchViaDirectIp(path, queryParams);
+        if (directResponse.statusCode == 200) return directResponse;
       } catch (e) {
-        lastError = e;
-        debugPrint('Mirror $server failed: $e, trying next mirror...');
+        debugPrint('[RadioApi] Direct IP route failed: $e, trying standard HTTPS...');
       }
     }
 
-    throw Exception('Failed to connect to Radio Browser API: $lastError');
+    // Attempt 1: Standard HTTPS via hostname
+    try {
+      final uri = Uri.https(_currentServer, path, queryParams);
+      final response = await http.get(uri, headers: _baseHeaders).timeout(
+        const Duration(seconds: 5),
+      );
+      if (response.statusCode == 200) {
+        _preferredRoute = ApiRoute.standardHttps;
+        return response;
+      }
+    } catch (e) {
+      debugPrint('[RadioApi] Standard HTTPS for $_currentServer failed: $e. Switching to Direct IP (Anti-Censorship/ISP DNS bypass)...');
+    }
+
+    // Attempt 2: Direct IP HTTP (Bypasses local ISP DNS blocks completely)
+    try {
+      final directResponse = await _fetchViaDirectIp(path, queryParams);
+      if (directResponse.statusCode == 200) {
+        _preferredRoute = ApiRoute.directIpHttp;
+        debugPrint('[RadioApi] Successfully connected via Direct IP (ISP DNS bypassed)!');
+        return directResponse;
+      }
+    } catch (e) {
+      debugPrint('[RadioApi] Direct IP with $_resolvedIp failed: $e');
+    }
+
+    // Attempt 3: Refresh DoH and try again
+    await _resolveDnsOverHttps();
+    try {
+      final directResponse = await _fetchViaDirectIp(path, queryParams);
+      if (directResponse.statusCode == 200) {
+        _preferredRoute = ApiRoute.directIpHttp;
+        return directResponse;
+      }
+    } catch (e) {
+      debugPrint('[RadioApi] Final fallback failed: $e');
+    }
+
+    throw Exception('Failed to connect to Radio Browser API. Local network issue or ISP block.');
+  }
+
+  Future<http.Response> _fetchViaDirectIp(String path, [Map<String, String>? queryParams]) async {
+    final uri = Uri.http(_resolvedIp, path, queryParams);
+    final headers = {
+      ..._baseHeaders,
+      'Host': defaultHostname,
+    };
+    return await http.get(uri, headers: headers).timeout(
+      const Duration(seconds: 8),
+    );
   }
 
   /// Search radio stations with comprehensive filters
@@ -143,74 +220,39 @@ class RadioApiService {
     return jsonList.map((j) => RadioStation.fromJson(j as Map<String, dynamic>)).toList();
   }
 
-  /// Fetch list of countries with station counts
-  Future<List<CountryItem>> getCountries({String? search, int limit = 150}) async {
-    final Map<String, String> query = {
-      'order': 'stationcount',
-      'reverse': 'true',
-      'limit': limit.toString(),
-    };
-    final path = (search != null && search.trim().isNotEmpty)
-        ? '/json/countries/${Uri.encodeComponent(search.trim())}'
-        : '/json/countries';
-
-    final response = await _getWithFallback(path, query);
+  /// Fetch all countries
+  Future<List<CountryItem>> getCountries({int? limit}) async {
+    final Map<String, String>? query = limit != null ? {'limit': limit.toString()} : null;
+    final response = await _getWithFallback('/json/countries', query);
     final List<dynamic> jsonList = jsonDecode(response.body);
-    return jsonList
-        .map((j) => CountryItem.fromJson(j as Map<String, dynamic>))
-        .where((c) => c.name.trim().isNotEmpty && c.stationCount > 0)
-        .toList();
+    return jsonList.map((j) => CountryItem.fromJson(j as Map<String, dynamic>)).toList();
   }
 
-  /// Fetch list of languages with station counts
-  Future<List<LanguageItem>> getLanguages({String? search, int limit = 100}) async {
-    final Map<String, String> query = {
-      'order': 'stationcount',
-      'reverse': 'true',
-      'limit': limit.toString(),
-    };
-    final path = (search != null && search.trim().isNotEmpty)
-        ? '/json/languages/${Uri.encodeComponent(search.trim())}'
-        : '/json/languages';
-
-    final response = await _getWithFallback(path, query);
+  /// Fetch all supported languages
+  Future<List<LanguageItem>> getLanguages({int? limit}) async {
+    final Map<String, String>? query = limit != null ? {'limit': limit.toString()} : null;
+    final response = await _getWithFallback('/json/languages', query);
     final List<dynamic> jsonList = jsonDecode(response.body);
-    return jsonList
-        .map((j) => LanguageItem.fromJson(j as Map<String, dynamic>))
-        .where((l) => l.name.trim().isNotEmpty && l.stationCount > 0)
-        .toList();
+    return jsonList.map((j) => LanguageItem.fromJson(j as Map<String, dynamic>)).toList();
   }
 
-  /// Fetch list of popular tags/genres
-  Future<List<GenreTag>> getPopularTags({String? search, int limit = 80}) async {
-    final Map<String, String> query = {
-      'order': 'stationcount',
-      'reverse': 'true',
-      'limit': limit.toString(),
-    };
-    final path = (search != null && search.trim().isNotEmpty)
-        ? '/json/tags/${Uri.encodeComponent(search.trim())}'
-        : '/json/tags';
-
-    final response = await _getWithFallback(path, query);
+  /// Fetch popular genre tags
+  Future<List<GenreTag>> getPopularTags({int limit = 50}) async {
+    final response = await _getWithFallback(
+      '/json/tags',
+      {'limit': limit.toString(), 'order': 'stationcount', 'reverse': 'true'},
+    );
     final List<dynamic> jsonList = jsonDecode(response.body);
-    return jsonList
-        .map((j) => GenreTag.fromJson(j as Map<String, dynamic>))
-        .where((t) => t.name.trim().isNotEmpty && t.stationCount > 10)
-        .toList();
+    return jsonList.map((j) => GenreTag.fromJson(j as Map<String, dynamic>)).toList();
   }
 
-  /// Register station play/click in Radio Browser community stats
-  Future<String?> registerStationClick(String stationUuid) async {
+  /// Register a click when station starts playing (helps Radio Browser analytics)
+  Future<void> registerStationClick(String stationUuid) async {
     try {
-      final response = await _getWithFallback('/json/url/$stationUuid');
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body) as Map<String, dynamic>;
-        return data['url']?.toString();
-      }
-    } catch (e) {
-      debugPrint('Failed to register station click: $e');
+      final uri = Uri.https(defaultHostname, '/json/url/$stationUuid');
+      await http.get(uri, headers: _baseHeaders).timeout(const Duration(seconds: 3));
+    } catch (_) {
+      // Non-critical, ignore click registration failure
     }
-    return null;
   }
 }

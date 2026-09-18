@@ -7,19 +7,35 @@ class AppTranslations {
 
   const AppTranslations({required this.isArabic});
 
-  static AppTranslations of(BuildContext context) {
-    final isAr = context.watch<LocaleProvider>().isArabic;
+  static AppTranslations of(BuildContext context, {bool listen = false}) {
+    final isAr = Provider.of<LocaleProvider>(context, listen: listen).isArabic;
     return AppTranslations(isArabic: isAr);
   }
 
   // General & Navigation
-  String get appName => isArabic ? 'راديو فلاح' : 'FALAH RADIO';
-  String get appSubtitle => isArabic ? 'مشغل محطات الراديو العالمية - فلاح كاطع صالح' : 'Global Live Radio by Falah G. Salieh';
+  String get appName => isArabic ? 'راديو وتلفزيون أونلاين' : 'Radio & TV Online';
+  String get appSubtitle => isArabic ? 'بث حي ومباشر للمحطات الإذاعية والقنوات التلفزيونية' : 'Live Global Radio Stations & TV Channels';
   String get navHome => isArabic ? 'الرئيسية' : 'Home';
   String get navCountries => isArabic ? 'الدول' : 'Countries';
+  String get navLiveTv => isArabic ? 'تلفزيون مباشر' : 'Live TV';
   String get navSearch => isArabic ? 'البحث' : 'Search';
   String get navFavorites => isArabic ? 'المفضلة' : 'Favorites';
   String get navDownloads => isArabic ? 'التسجيلات' : 'Downloads';
+
+  // Live TV IPTV
+  String get liveTvTitle => isArabic ? 'محطات التلفزيون العالمية' : 'World Live TV & IPTV';
+  String get liveTvSubtitle => isArabic ? 'بث حي ومباشر للقنوات الإخبارية، الرياضية والترفيهية (HLS/IPTV)' : 'Live HLS streaming of news, sports, entertainment channels';
+  String get tvCategories => isArabic ? 'تصنيفات التلفزيون' : 'TV Categories';
+  String get searchTvHint => isArabic ? 'ابحث عن قناة تلفزيونية أو دولة...' : 'Search TV channel or country...';
+  String get channelsCount => isArabic ? 'قناة تلفزيونية' : 'Live Channels';
+  String get streamQuality => isArabic ? 'الجودة' : 'Quality';
+  String get epgSchedule => isArabic ? 'دليل البرامج التلفزيونية (EPG)' : 'TV Program Guide (EPG)';
+  String get nowPlayingTv => isArabic ? 'يُبث الآن' : 'Now On Air';
+  String get nextShow => isArabic ? 'البرنامج القادم' : 'Upcoming Next';
+  String get tvPlayer => isArabic ? 'مشغل البث المباشر' : 'Live Stream Player';
+  String get connectionError => isArabic ? 'تعذر تشغيل البث، قد يكون مؤقتاً أو مقيداً جغرافياً' : 'Stream unavailable or temporarily restricted';
+  String get geoBlockedNotice => isArabic ? 'البث مقيد جغرافياً' : 'Geo-restricted';
+  String get channelsSource => isArabic ? 'المصدر: قاعدة بيانات IPTV-org العالمية' : 'Source: Global IPTV-org Database';
 
   // Stats
   String get liveRadios => isArabic ? 'محطة مباشرة' : 'Live Radios';
@@ -137,13 +153,13 @@ class AppTranslations {
 
   // Copyright
   String get developerCopyright =>
-      isArabic ? 'حقوق النشر © 2025 للمطور العراقي فلاح كاطع صالح' : 'COPYRIGHT BY Iraqi Developer Falah.G.Salieh 2025 co.';
+      isArabic ? 'جميع الحقوق محفوظة © 2026 راديو وتلفزيون أونلاين' : 'Copyright © 2026 Radio & TV Online. All rights reserved.';
 
   // Side Menu & Drawer
   String get menuTitle => isArabic ? 'القائمة الرئيسية' : 'Main Menu';
-  String get menuHomeMain => isArabic ? 'الرئيسية (Home Main)' : 'Home Main';
-  String get menuHelpDocs => isArabic ? 'وثائق المساعدة والدليل' : 'Help Documentation';
-  String get menuDevProfile => isArabic ? 'ملف المطور' : 'Developer Profile';
+  String get menuHomeMain => isArabic ? 'الرئيسية' : 'Home';
+  String get menuHelpDocs => isArabic ? 'دليل الاستخدام والمساعدة' : 'User Guide & Help';
+  String get menuDevProfile => isArabic ? 'عن المنصة والبث' : 'About Platform';
   String get quickToggles => isArabic ? 'التبديل السريع' : 'Quick Toggles';
   String get darkModeToggle => isArabic ? 'الوضع الداكن' : 'Dark Mode';
   String get darkModeSubtitle => isArabic ? 'المظهر الليلي عالي الأناقة' : 'Sleek Cyber Dark Palette';
@@ -157,7 +173,7 @@ class AppTranslations {
   String get signIn => isArabic ? 'تسجيل الدخول' : 'Sign In';
   String get signOut => isArabic ? 'تسجيل الخروج' : 'Sign Out';
   String get enterYourName => isArabic ? 'أدخل اسمك الكريم' : 'Enter your name';
-  String get nameHint => isArabic ? 'مثال: فلاح أو أحمد' : 'e.g. Falah or Alex';
+  String get nameHint => isArabic ? 'مثال: أحمد أو علي' : 'e.g. Alex or Sam';
   String get cancel => isArabic ? 'إلغاء' : 'Cancel';
   String get saveAndSignIn => isArabic ? 'حفظ وتسجيل الدخول' : 'Save & Sign In';
   String get pleaseEnterName => isArabic ? 'يرجى كتابة الاسم أولاً' : 'Please enter a name first';
@@ -165,24 +181,24 @@ class AppTranslations {
   String get confirmSignOut => isArabic ? 'هل تريد بالتأكيد تسجيل الخروج؟' : 'Are you sure you want to sign out?';
   String get memberSince => isArabic ? 'تاريخ التسجيل:' : 'Member since:';
 
-  // Developer Profile
-  String get developerTitle => isArabic ? 'المطور العراقي فلاح كاطع صالح' : 'Iraqi Developer Falah.G.Salieh';
-  String get developerCompany => isArabic ? 'شركة فلاح كاطع صالح 2025' : 'Falah.G.Salieh 2025 Co.';
-  String get leadEngineer => isArabic ? 'كبير مهندسي البرمجيات وتطبيقات الموبايل' : 'Lead Mobile & Software Systems Engineer';
+  // About Platform & Broadcast Profile
+  String get developerTitle => isArabic ? 'راديو وتلفزيون أونلاين' : 'Radio & TV Online';
+  String get developerCompany => isArabic ? 'شبكة البث الرقمي المباشر 2026' : 'Digital Broadcast Network 2026';
+  String get leadEngineer => isArabic ? 'منصة البث الصوتي والمرئي العالمي' : 'Global Audio & Video Streaming Platform';
   String get devBio => isArabic
-      ? 'مهندس ومطور برمجيات عراقي شغوف بابتكار تطبيقات صوتية وتفاعلية فائقة السرعة وعالمية المستوى بتقنيات فلاتر الحديثة، داعمة للمجتمع العراقي والعربي والعالمي.'
-      : 'Passionate Iraqi software engineer dedicated to building high-performance, world-class streaming applications using modern Flutter, delivering seamless digital experiences worldwide.';
-  String get appVersion => isArabic ? 'الإصدار 1.0.0 (Release AAB)' : 'Version 1.0.0 (Release AAB)';
-  String get builtWithLove => isArabic ? 'صُنع بكل فخر بواسطة مهندس عراقي 🇮🇶' : 'Built with pride by Iraqi Developer 🇮🇶';
-  String get techStack => isArabic ? 'التقنيات المستخدمة' : 'Technology Stack';
-  String get coreFramework => isArabic ? 'فلاتر 3 و دارت 3' : 'Flutter 3 & Dart 3';
-  String get radioBrowserApi => isArabic ? 'واجهة Radio-Browser المفتوحة' : 'Radio-Browser Open API';
-  String get contactDeveloper => isArabic ? 'تواصل مع المطور' : 'Contact Developer';
+      ? 'منصة ترفيهية متكاملة تقدم بثاً حياً ومباشراً لأكثر من 58,000 محطة إذاعية وقنوات تلفزيونية عالمية مع تسجيل عالي الجودة وتجربة استماع ومشاهدة سلسة.'
+      : 'Comprehensive live entertainment platform connecting you to 58,000+ radio stations and global TV streams with real-time recording and seamless multi-codec playback.';
+  String get appVersion => isArabic ? 'الإصدار 1.0.0 (2026)' : 'Version 1.0.0 (2026)';
+  String get builtWithLove => isArabic ? 'صُمم بأعلى معايير البث المباشر © 2026' : 'Engineered for high quality live streaming © 2026';
+  String get techStack => isArabic ? 'المواصفات والتقنيات' : 'Technology & Specifications';
+  String get coreFramework => isArabic ? 'تقنية فلاتر الحديثة' : 'Modern Flutter Architecture';
+  String get radioBrowserApi => isArabic ? 'دليل الإذاعات وقنوات البث العالمية' : 'Global Broadcast & Radio Directories';
+  String get contactDeveloper => isArabic ? 'الدعم الفني' : 'Technical Support';
   String get shareApp => isArabic ? 'مشاركة التطبيق' : 'Share Application';
 
   // Help Documentation
-  String get helpDocsTitle => isArabic ? 'دليل استخدام راديو تشانل' : 'Radio Channel User Guide';
-  String get helpDocsSubtitle => isArabic ? 'كل ما تحتاج لمعرفته للاستمتاع بأكثر من 30,000 محطة' : 'Everything you need to enjoy 30,000+ stations';
+  String get helpDocsTitle => isArabic ? 'دليل استخدام راديو وتلفزيون أونلاين' : 'Radio & TV Online User Guide';
+  String get helpDocsSubtitle => isArabic ? 'كل ما تحتاج لمعرفته للاستمتاع بآلاف الإذاعات والقنوات المباشرة' : 'Everything you need to enjoy thousands of live stations & channels';
   String get guideStationsSearch => isArabic ? 'البحث والتصفية الدقيقة' : 'Searching & Smart Filters';
   String get guideStationsSearchBody => isArabic
       ? 'يمكنك البحث الفوري عن أي محطة حسب اسمها، أو تصفيتها حسب الدولة (أكثر من 180 دولة)، أو لغة البث، أو نوع الموسيقى، أو صيغة الصوت (MP3, AAC, OGG) ومعدل البت (Bitrate).'

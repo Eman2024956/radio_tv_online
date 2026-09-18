@@ -176,8 +176,8 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen>
                       // Bilingual Subtitle
                       Text(
                         tr.isArabic
-                            ? 'استمع لأكثر من 30,000 محطة راديو مباشرة حول العالم بجودة عالية وتنزيل MP3'
-                            : 'Stream 30,000+ live radio channels worldwide with crystal audio & MP3 recording',
+                            ? 'بث مباشر لآلاف المحطات الإذاعية والقنوات التلفزيونية حول العالم بجودة فائقة'
+                            : 'Stream thousands of live radio stations & TV channels worldwide with crystal audio and video',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 14,
@@ -194,10 +194,10 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen>
                         spacing: 8,
                         runSpacing: 8,
                         children: [
-                          _buildFeaturePill(context, '📻 30,000+ Stations'),
-                          _buildFeaturePill(context, '🌍 180+ Countries'),
-                          _buildFeaturePill(context, '🔴 Live MP3 Download'),
-                          _buildFeaturePill(context, '⚡ Zero Latency'),
+                          _buildFeaturePill(context, '📻 58,000+ Radios'),
+                          _buildFeaturePill(context, '📺 World Live TV'),
+                          _buildFeaturePill(context, '🔴 Live MP3 Record'),
+                          _buildFeaturePill(context, '🌍 240+ Countries'),
                         ],
                       ),
 
@@ -254,12 +254,11 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen>
 
                       const SizedBox(height: 12),
 
-                      // Copyright by Iraqi Developer Falah.G.Salieh 2025 co.
+                      // Copyright 2026
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text('🇮🇶 ', style: TextStyle(fontSize: 12)),
                           Flexible(
                             child: Text(
                               tr.developerCopyright,
@@ -277,8 +276,8 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen>
                       const SizedBox(height: 4),
                       Text(
                         tr.isArabic
-                            ? 'مدعوم بقاعدة بيانات راديو-براوزر العالمية المفتوحة'
-                            : 'Powered by Radio Browser Global Open API',
+                            ? 'بث مباشر عالي الجودة - راديو وتلفزيون أونلاين'
+                            : 'High-Quality Live Streaming - Radio & TV Online',
                         style: TextStyle(
                           fontSize: 10,
                           color: AppTheme.textMutedOf(context),

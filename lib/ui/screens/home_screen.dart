@@ -124,7 +124,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         icon: Icon(Icons.search_rounded, color: AppTheme.primaryOf(context), size: 18),
                         tooltip: tr.navSearch,
-                        onPressed: () => onNavigateToTab?.call(2), // Tab 2 is Search
+                        onPressed: () => onNavigateToTab?.call(3), // Tab 3 is Search
                       ),
                     ],
                   ),
@@ -184,6 +184,95 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
 
+              // World Live TV / IPTV Banner
+              SliverToBoxAdapter(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF8A2387), Color(0xFFE94057), Color(0xFFF27121)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFE94057).withValues(alpha: 0.35),
+                        blurRadius: 16,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(20),
+                    onTap: () => onNavigateToTab?.call(1), // Tab 1 is Live TV
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.live_tv_rounded, color: Colors.white, size: 28),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: const Text(
+                                      'IPTV LIVE',
+                                      style: TextStyle(
+                                        color: Color(0xFFE94057),
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w900,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  const Text(
+                                    'HLS .m3u8',
+                                    style: TextStyle(color: Colors.white70, fontSize: 11),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                tr.liveTvTitle,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                tr.liveTvSubtitle,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(color: Colors.white70, fontSize: 11),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 16),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
               // Hero Featured Live Channel Banner
               if (radioProvider.featuredStation != null)
                 SliverToBoxAdapter(
@@ -218,7 +307,7 @@ class HomeScreen extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           searchFilter.setOrderBy('clickcount', true);
-                          onNavigateToTab?.call(2);
+                          onNavigateToTab?.call(3);
                         },
                         child: Text(
                           tr.seeAll,
@@ -267,7 +356,7 @@ class HomeScreen extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           searchFilter.setOrderBy('votes', true);
-                          onNavigateToTab?.call(2);
+                          onNavigateToTab?.call(3);
                         },
                         child: Text(
                           tr.seeAll,
@@ -454,7 +543,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               TextButton(
-                onPressed: () => onNavigateToTab?.call(1), // Tab 1 is Countries
+                onPressed: () => onNavigateToTab?.call(2), // Tab 2 is Countries
                 child: Text(
                   tr.viewAllCountries,
                   style: TextStyle(color: AppTheme.primaryOf(context), fontSize: 11, fontWeight: FontWeight.bold),
@@ -563,7 +652,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   onSelected: (_) {
                     searchFilter.setGenre(tag.isEmpty ? null : tag);
-                    onNavigateToTab?.call(2); // Jump to search tab
+                    onNavigateToTab?.call(3); // Jump to search tab
                   },
                 ),
               );

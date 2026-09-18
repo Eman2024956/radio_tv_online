@@ -199,7 +199,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                               onTap: () {
                                 searchFilter.setCountry(country.name, country.isoCode);
                                 radioProvider.setQuickCountry(country.isoCode);
-                                widget.onNavigateToTab?.call(2); // Jump to search tab
+                                widget.onNavigateToTab?.call(3); // Jump to search tab
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(12),

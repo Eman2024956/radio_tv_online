@@ -349,12 +349,22 @@ class AppDrawer extends StatelessWidget {
                   ),
                   _buildMenuItem(
                     context: context,
+                    icon: Icons.live_tv_rounded,
+                    iconColor: Colors.redAccent,
+                    title: tr.navLiveTv,
+                    onTap: () {
+                      Navigator.pop(context);
+                      onNavigateToTab?.call(1);
+                    },
+                  ),
+                  _buildMenuItem(
+                    context: context,
                     icon: Icons.public_rounded,
                     iconColor: AppTheme.secondaryPurple,
                     title: tr.navCountries,
                     onTap: () {
                       Navigator.pop(context);
-                      onNavigateToTab?.call(1);
+                      onNavigateToTab?.call(2);
                     },
                   ),
                   _buildMenuItem(
@@ -364,7 +374,7 @@ class AppDrawer extends StatelessWidget {
                     title: tr.navSearch,
                     onTap: () {
                       Navigator.pop(context);
-                      onNavigateToTab?.call(2);
+                      onNavigateToTab?.call(3);
                     },
                   ),
                   _buildMenuItem(
@@ -374,7 +384,7 @@ class AppDrawer extends StatelessWidget {
                     title: tr.navFavorites,
                     onTap: () {
                       Navigator.pop(context);
-                      onNavigateToTab?.call(3);
+                      onNavigateToTab?.call(4);
                     },
                   ),
                   _buildMenuItem(
@@ -384,7 +394,7 @@ class AppDrawer extends StatelessWidget {
                     title: tr.navDownloads,
                     onTap: () {
                       Navigator.pop(context);
-                      onNavigateToTab?.call(4);
+                      onNavigateToTab?.call(5);
                     },
                   ),
 

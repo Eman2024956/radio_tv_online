@@ -15,4 +15,9 @@ class GenreTag {
           : int.tryParse('${json['stationcount']}') ?? 0,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'name': name,
+    'stationcount': stationCount,
+  };
 }

@@ -11,6 +11,7 @@ import 'providers/player_provider.dart';
 import 'providers/favorites_provider.dart';
 import 'providers/download_provider.dart';
 import 'providers/user_profile_provider.dart';
+import 'providers/live_tv_provider.dart';
 import 'ui/screens/welcome_splash_screen.dart';
 
 void main() async {
@@ -39,6 +40,7 @@ class RadioChannelApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
         ChangeNotifierProvider(create: (_) => FavoritesProvider()),
         ChangeNotifierProvider(create: (_) => RadioProvider()),
+        ChangeNotifierProvider(create: (_) => LiveTvProvider()),
         ChangeNotifierProvider(create: (_) => SearchFilterProvider()),
         ChangeNotifierProvider(create: (_) => DownloadProvider()),
         ChangeNotifierProvider(create: (_) => UserProfileProvider()),
@@ -56,7 +58,7 @@ class RadioChannelApp extends StatelessWidget {
       child: Consumer2<ThemeProvider, LocaleProvider>(
         builder: (context, themeProvider, localeProvider, _) {
           return MaterialApp(
-            title: 'راديو فلاح - Falah Radio',
+            title: 'Radio & TV Online',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,

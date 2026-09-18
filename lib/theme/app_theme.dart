@@ -298,4 +298,12 @@ class AppTheme {
   static Color primaryOf(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark ? primaryCyan : const Color(0xFF0284C7);
   }
+
+  static Color accentOf(BuildContext context) {
+    return primaryOf(context);
+  }
+
+  static Color backgroundOf(BuildContext context) {
+    return scaffoldOf(context);
+  }
 }
